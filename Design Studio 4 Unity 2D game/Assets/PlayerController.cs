@@ -12,16 +12,27 @@ public class PlayerController : MonoBehaviour {
 
     public Rigidbody2D rb2D;
     Renderer renderer;
-    Renderer enemyRend;
+
+    public GameObject[] enemys;
+    Renderer[] enemyRend;
 
     public int health = 100;
     public int score = 0;
 
-	void Start () {
-		speed = 10;
-		rb2D = GetComponent<Rigidbody2D>();
+    void Start() {
+        speed = 10;
+        rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
-        enemyRend = GameObject.Find("Enemy").GetComponent<Renderer>();
+
+        
+        enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+        enemyRend = new Renderer[enemys.Length];
+
+        for (int i = 0; i < enemys.Length; ++i)
+            enemyRend[i] = enemys[i].GetComponent<Renderer>();
+
+        //enemyRend = GameObject.Find("Enemy").GetComponent<Renderer>();
     }
 
 	void Update () {
@@ -31,9 +42,12 @@ public class PlayerController : MonoBehaviour {
 		if (hit.collider != null ) {
 			Debug.Log (hit.transform.gameObject.name);
 		}*/
-
-        if (this.renderer.bounds.Intersects(enemyRend.bounds)) {
-            Destroy(this.gameObject);
+        for (int i = 0; i < enemys.Length; ++i)
+        {
+            if (this.renderer.bounds.Intersects(enemyRend[i].bounds))
+            {
+                Destroy(this.gameObject);
+            }
         }
 
         //InvokeRepeating("ReduceHealth",1,1);
