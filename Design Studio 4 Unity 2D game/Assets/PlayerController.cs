@@ -71,12 +71,13 @@ public class PlayerController : MonoBehaviour {
     }
 
 	void Update () {
+
 		Move ();
 		
         for (int i = 0; i < enemys.Length; ++i){
 
             if (this.renderer.bounds.Intersects(enemyRend[i].bounds)){
-                Destroy(this.gameObject);
+				this.gameObject.SetActive(false);
             }
         }
 
@@ -95,13 +96,7 @@ public class PlayerController : MonoBehaviour {
 	void ReduceHealth() {
         --health;
     }
-
-	void SpawnCoin(Vector3 target){
-		
-		Instantiate(Coin, target, Quaternion.identity);
-		
-	}
-
+	
 	void Move (){
 	
 		//Update main character movement through player key commands
@@ -122,7 +117,7 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKey(KeyCode.Space)){
 			transform.Translate (0.0f, (Time.deltaTime * speed), 0.0f);
 
-			animator.SetInteger("Direction", 2);
+			animator.SetInteger("Direction", 3);
 		}
 		if(Input.anyKey == false)
 		{
