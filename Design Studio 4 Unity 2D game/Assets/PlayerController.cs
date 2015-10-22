@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
@@ -18,45 +19,70 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject[] scoreSpawns;
 
+	public GameObject[] coins;
+	Renderer[] coinRend;
+
 	public GameObject Coin;
 
     public int health = 100;
-    public int score = 0;
+	public int score;
 
-    void Start() {
+	public Text ScoreText;
+
+	void Awake() {
+
+
+	}
+
+	void Start() {
         speed = 10;
         rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
 
+		//Iterate through all objects with a specific tag and place it into the corresponding array
 		scoreSpawns = GameObject.FindGameObjectsWithTag("ScoreSpawn");
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
+		coins = GameObject.FindGameObjectsWithTag("Coin");
 
+		//Assign Enemy and Coin renderers to new renderer of array size # of enemies & coins 
         enemyRend = new Renderer[enemys.Length];
-
+		coinRend = new Renderer[coins.Length];
+		
         for (int i = 0; i < enemys.Length; ++i)
             enemyRend[i] = enemys[i].GetComponent<Renderer>();
 
-		for (int i = 0; i < scoreSpawns.Length; ++i)
-			Instantiate(Coin, scoreSpawns[i].transform.position, Quaternion.identity);
-        //enemyRend = GameObject.Find("Enemy").GetComponent<Renderer>();
+
+		for (int i = 0; i < coins.Length; ++i)
+			coinRend[i] = coins[i].GetComponent<Renderer>();
+
+		//Iterate through all spawn locations and place a coin there
+		//for (int i = 0; i < scoreSpawns.Length; ++i)
+			//Instantiate(Coin, scoreSpawns[i].transform.position, Quaternion.identity);
     }
 
 	void Update () {
 		Move ();
 		
-        for (int i = 0; i < enemys.Length; ++i)
-        {
-            if (this.renderer.bounds.Intersects(enemyRend[i].bounds))
-            {
+        for (int i = 0; i < enemys.Length; ++i){
+
+            if (this.renderer.bounds.Intersects(enemyRend[i].bounds)){
                 Destroy(this.gameObject);
             }
         }
 
-        //InvokeRepeating("ReduceHealth",1,1);
+		for (int i = 0; i < coins.Length; ++i){
 
+			if ((this.renderer.bounds.Intersects(coinRend[i].bounds) && (coinRend[i].enabled != false))) {
+				score += 1;
+				ScoreText.text = "Score: " + score.ToString();
+				coinRend[i].enabled = false;
+			}
+		}
+		//InvokeRepeating("ReduceHealth",1,1);
+		
 	}
-
-    void ReduceHealth() {
+	
+	void ReduceHealth() {
         --health;
     }
 
