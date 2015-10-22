@@ -46,6 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BGScroll.cs" />
+     <Compile Include="Assets\FollowAI.cs" />
+     <Compile Include="Assets\PatrolAI.cs" />
      <Compile Include="Assets\PlayerController.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">

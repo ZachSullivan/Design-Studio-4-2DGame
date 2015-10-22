@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour {
     public GameObject[] enemys;
     Renderer[] enemyRend;
 
+	public GameObject[] scoreSpawns;
+
+	public GameObject Coin;
+
     public int health = 100;
     public int score = 0;
 
@@ -24,7 +28,7 @@ public class PlayerController : MonoBehaviour {
         rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
 
-        
+		scoreSpawns = GameObject.FindGameObjectsWithTag("ScoreSpawn");
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
         enemyRend = new Renderer[enemys.Length];
@@ -32,16 +36,14 @@ public class PlayerController : MonoBehaviour {
         for (int i = 0; i < enemys.Length; ++i)
             enemyRend[i] = enemys[i].GetComponent<Renderer>();
 
+		for (int i = 0; i < scoreSpawns.Length; ++i)
+			Instantiate(Coin, scoreSpawns[i].transform.position, Quaternion.identity);
         //enemyRend = GameObject.Find("Enemy").GetComponent<Renderer>();
     }
 
 	void Update () {
 		Move ();
-
-        /*RaycastHit2D hit = Physics2D.Raycast (transform.position, Vector2.up);
-		if (hit.collider != null ) {
-			Debug.Log (hit.transform.gameObject.name);
-		}*/
+		
         for (int i = 0; i < enemys.Length; ++i)
         {
             if (this.renderer.bounds.Intersects(enemyRend[i].bounds))
@@ -57,6 +59,12 @@ public class PlayerController : MonoBehaviour {
     void ReduceHealth() {
         --health;
     }
+
+	void SpawnCoin(Vector3 target){
+		
+		Instantiate(Coin, target, Quaternion.identity);
+		
+	}
 
 	void Move (){
 
