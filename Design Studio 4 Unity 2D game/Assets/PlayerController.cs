@@ -27,11 +27,17 @@ public class PlayerController : MonoBehaviour {
 	//Reference to the prefab to instanciate
 	public GameObject Coin;
 
+	//Array list of all hearts in the scene
+	public GameObject[] hearts;
+	Renderer[] heartRend;
+
     public int health = 100;
 	public int score;
 
 	public Text ScoreText;
 
+	public Animator animator;
+	
 	void Awake() {
 
 
@@ -46,6 +52,7 @@ public class PlayerController : MonoBehaviour {
 		scoreSpawns = GameObject.FindGameObjectsWithTag("ScoreSpawn");
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
 		coins = GameObject.FindGameObjectsWithTag("Coin");
+		hearts = GameObject.FindGameObjectsWithTag ("Heart");
 
 		//Assign Enemy and Coin renderers to new renderer of array size # of enemies & coins 
         enemyRend = new Renderer[enemys.Length];
@@ -96,19 +103,30 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Move (){
-
-
+	
 		//Update main character movement through player key commands
 		if(Input.GetKey(KeyCode.RightArrow)){
 			transform.Translate ((Time.deltaTime * speed), 0.0f, 0.0f);
+			transform.localScale = new Vector3(1, 1, 1);
+			animator.SetInteger("Direction", 1);
+
 		}
 
 		if(Input.GetKey(KeyCode.LeftArrow)){
 			transform.Translate ((Time.deltaTime * -speed), 0.0f, 0.0f);
+			transform.localScale = new Vector3(-1, 1, 1);
+
+			animator.SetInteger("Direction", 1);
         }
 
 		if(Input.GetKey(KeyCode.Space)){
 			transform.Translate (0.0f, (Time.deltaTime * speed), 0.0f);
+
+			animator.SetInteger("Direction", 2);
+		}
+		if(Input.anyKey == false)
+		{
+			animator.SetInteger("Direction", 2);
 		}
 
 
