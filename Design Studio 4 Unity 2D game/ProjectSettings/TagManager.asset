@@ -8,6 +8,7 @@ TagManager:
   - Waypoint
   - ScoreSpawn
   - Coin
+  - Heart
   layers:
   - Default
   - TransparentFX

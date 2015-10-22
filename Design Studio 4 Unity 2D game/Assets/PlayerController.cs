@@ -10,18 +10,21 @@ public class PlayerController : MonoBehaviour {
 	public float floatHeight;
 	public float liftForce;
 	public float damping;
-
-    public Rigidbody2D rb2D;
+	
     Renderer renderer;
 
+	//Array list of all enemies in the scene
     public GameObject[] enemys;
     Renderer[] enemyRend;
 
+	//Array list of all coin spawns in the scene
 	public GameObject[] scoreSpawns;
 
+	//Array list of all coins in the scene
 	public GameObject[] coins;
 	Renderer[] coinRend;
 
+	//Reference to the prefab to instanciate
 	public GameObject Coin;
 
     public int health = 100;
@@ -35,8 +38,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Start() {
+
         speed = 10;
-        rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
 
 		//Iterate through all objects with a specific tag and place it into the corresponding array
