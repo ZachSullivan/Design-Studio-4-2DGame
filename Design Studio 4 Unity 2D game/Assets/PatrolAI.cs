@@ -4,7 +4,7 @@ using System.Collections;
 public class PatrolAI : MonoBehaviour {
 
     public int speed;
-	int dir = 4;
+	float dir = 2.6f;
 	void Update () {
 
         transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);

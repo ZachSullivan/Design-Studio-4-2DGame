@@ -1,12 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PlayerController.cs">
     <Files>
-      <File FileName="Assets\PlayerController.cs" Line="81" Column="14" />
+      <File FileName="Assets\PlayerController.cs" Line="83" Column="7" />
       <File FileName="Assets\Standard Assets\2D\Scripts\PlatformerCharacter2D.cs" Line="1" Column="1" />
-      <File FileName="Assets\SmoothFollow.cs" Line="15" Column="3" />
-      <File FileName="Assets\FollowAI.cs" Line="12" Column="2" />
-      <File FileName="Assets\PatrolAI.cs" Line="18" Column="25" />
+      <File FileName="Assets\SmoothFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets\FollowAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\PatrolAI.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

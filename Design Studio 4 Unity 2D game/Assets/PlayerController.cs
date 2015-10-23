@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
 	public Text ScoreText;
 
+	public Text EndText;
+
 	public Animator animator;
 
 	public GameObject GameOver;
@@ -88,6 +90,7 @@ public class PlayerController : MonoBehaviour {
 			
 			//Application.LoadLevel(Application.loadedLevel);
 			GameOver.GetComponent<SpriteRenderer>().enabled = true;
+			ScoreText.enabled = false;
 			StartCoroutine("StartNewGame");
 		}
 
@@ -95,15 +98,27 @@ public class PlayerController : MonoBehaviour {
 
 			if ((this.renderer.bounds.Intersects(coinRend[i].bounds) && (coinRend[i].enabled != false))) {
 				score += 1;
-				ScoreText.text = "Score: " + score.ToString();
+				ScoreText.text = "COINS: " + score.ToString() + " / 6";
 				coinRend[i].enabled = false;
+					
+				if(score == 6){
+					ScoreText.text = "DONE!";
+					StartCoroutine("StartNewGame");
+				}
+
 			}
 		}
 	}
 
 	IEnumerator StartNewGame(){
 	
-		yield return new WaitForSeconds(3);
+		yield return new WaitForSeconds(1);
+		EndText.text = "New Game 3";
+		yield return new WaitForSeconds(1);
+		EndText.text = "New Game 2";
+		yield return new WaitForSeconds(1);
+		EndText.text = "New Game 1";
+		yield return new WaitForSeconds(1);
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
@@ -135,7 +150,11 @@ public class PlayerController : MonoBehaviour {
 			animator.SetInteger("Direction", 2);
 		}
 
-
 	}
 
+	//NOTE This is only for checking if the player has fallen out of the map NOT for enemy or coin collision
+	void OnCollisionEnter2D(Collision2D collision) {
+		if (collision.gameObject.tag == "Killbox") 
+			Application.LoadLevel(Application.loadedLevel);
+	}
 }

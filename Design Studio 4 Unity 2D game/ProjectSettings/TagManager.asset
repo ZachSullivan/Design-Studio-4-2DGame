@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - Heart
   - GameOver
+  - Killbox
   layers:
   - Default
   - TransparentFX

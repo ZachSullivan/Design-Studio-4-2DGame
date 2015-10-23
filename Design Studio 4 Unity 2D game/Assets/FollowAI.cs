@@ -6,7 +6,7 @@ public class FollowAI : MonoBehaviour {
     public GameObject Player;
 
     public int minDist = 5;
-    public int speed = 1;
+    public float speed = 1;
 
 	bool flipped = false;
 
