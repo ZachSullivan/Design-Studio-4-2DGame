@@ -9,6 +9,7 @@ TagManager:
   - ScoreSpawn
   - Coin
   - Heart
+  - GameOver
   layers:
   - Default
   - TransparentFX

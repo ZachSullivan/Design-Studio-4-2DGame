@@ -31,22 +31,21 @@ public class PlayerController : MonoBehaviour {
 	public GameObject[] hearts;
 	Renderer[] heartRend;
 
-    public int health = 100;
+    public int lifeCounter;
 	public int score;
 
 	public Text ScoreText;
 
 	public Animator animator;
+
+	public GameObject GameOver;
 	
-	void Awake() {
-
-
-	}
-
 	void Start() {
 
         speed = 10;
         renderer = GetComponent<Renderer>();
+
+		GameOver = GameObject.FindGameObjectWithTag("GameOver");
 
 		//Iterate through all objects with a specific tag and place it into the corresponding array
 		scoreSpawns = GameObject.FindGameObjectsWithTag("ScoreSpawn");
@@ -65,9 +64,6 @@ public class PlayerController : MonoBehaviour {
 		for (int i = 0; i < coins.Length; ++i)
 			coinRend[i] = coins[i].GetComponent<Renderer>();
 
-		//Iterate through all spawn locations and place a coin there
-		//for (int i = 0; i < scoreSpawns.Length; ++i)
-			//Instantiate(Coin, scoreSpawns[i].transform.position, Quaternion.identity);
     }
 
 	void Update () {
@@ -77,9 +73,23 @@ public class PlayerController : MonoBehaviour {
         for (int i = 0; i < enemys.Length; ++i){
 
             if (this.renderer.bounds.Intersects(enemyRend[i].bounds)){
-				this.gameObject.SetActive(false);
+
+				lifeCounter -= 1;
+
+				this.transform.position = new Vector3 (-1,-14,0);
+
+				if (lifeCounter > 0) {
+					hearts[lifeCounter].SetActive(false);
+				} 
             }
         }
+
+		if(lifeCounter == 0) {
+			
+			//Application.LoadLevel(Application.loadedLevel);
+			GameOver.GetComponent<SpriteRenderer>().enabled = true;
+			StartCoroutine("StartNewGame");
+		}
 
 		for (int i = 0; i < coins.Length; ++i){
 
@@ -89,14 +99,15 @@ public class PlayerController : MonoBehaviour {
 				coinRend[i].enabled = false;
 			}
 		}
-		//InvokeRepeating("ReduceHealth",1,1);
-		
 	}
+
+	IEnumerator StartNewGame(){
 	
-	void ReduceHealth() {
-        --health;
-    }
-	
+		yield return new WaitForSeconds(3);
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
+
 	void Move (){
 	
 		//Update main character movement through player key commands
